@@ -73,7 +73,7 @@ struct MyStringHash {
            
         }
 
-        return r[0]*w[0] + r[1]*w[1] + r[2]*w[2] + r[3]*w[3] + r[4]*w[4];
+        return rValues[0]*w[0] + rValues[1]*w[1] + rValues[2]*w[2] + rValues[3]*w[3] + rValues[4]*w[4];
     }
 
     // A likely helper function is to convert a-z,0-9 to an integral value 0-35
