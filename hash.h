@@ -20,16 +20,80 @@ struct MyStringHash {
     HASH_INDEX_T operator()(const std::string& k) const
     {
         // Add your code here
+        unsigned long long w[5] = {0};
 
+        if (k.size() > 6)
+        {
+            //divide the string into 6s?
+            int numofSubs = (k.size() + 5) / 6;
 
+            int w_size = 4;
+            for (int i = 0; i < numofSubs; i++)
+            {
+                int a[6] = {0};
+
+                int start = std::max(0, i - 6);  // Index where this chunk starts
+                int len = i - start;             // Length of the chunk (could be < 6)
+            
+                // Fill in the base-36 digits, padding with 0s on the left
+                for (int j = 0; j < len; ++j)
+                {
+                    a[6 - len + j] = letterDigitToNumber(k[j + start]);
+                }
+
+                unsigned long long val = 0;
+
+                for (int j = 0; j < 6; j++)
+                {
+                    val = val * 36 + a[j];
+                } 
+
+                w[w_size--] = val;
+            }
+
+        }
+        else 
+        {
+            int a[6] = {0};
+
+            for (int i = 0; i < k.size(); i++)
+            {
+                a[6 - k.size() + i] = letterDigitToNumber(k[i]);
+            }
+
+            unsigned long long val = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                val = val * 36 + a[i];
+            }
+            
+            w[4] = val;
+
+           
+        }
+
+        return r[0]*w[0] + r[1]*w[1] + r[2]*w[2] + r[3]*w[3] + r[4]*w[4];
     }
 
     // A likely helper function is to convert a-z,0-9 to an integral value 0-35
     HASH_INDEX_T letterDigitToNumber(char letter) const
     {
         // Add code here or delete this helper function if you do not want it
-        
-  (letter < 'a' &&)  }
+       char lowerCase = tolower(letter);
+       
+       if (lowerCase >= 'a' && lowerCase <= 'z')
+       {
+            return lowerCase - 'a';
+       }
+
+       if (lowerCase >= '0' && lowerCase <= '9')
+       {
+            return lowercase - 22;
+       }
+
+       return 0;
+    }
 
     // Code to generate the random R values
     void generateRValues()
