@@ -28,8 +28,8 @@ struct MyStringHash {
     HASH_INDEX_T letterDigitToNumber(char letter) const
     {
         // Add code here or delete this helper function if you do not want it
-
-    }
+        
+  (letter < 'a' &&)  }
 
     // Code to generate the random R values
     void generateRValues()
