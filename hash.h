@@ -28,7 +28,7 @@ struct MyStringHash {
             int numofSubs = (k.size() + 5) / 6;
 
             int w_size = 4;
-            for (int i = 0; i < numofSubs; i++)
+            for (int i = k.size(); i > 0; i -= 6)
             {
                 int a[6] = {0};
 
@@ -56,7 +56,7 @@ struct MyStringHash {
         {
             int a[6] = {0};
 
-            for (int i = 0; i < k.size(); i++)
+            for (unsigned int i = 0; i < k.size(); i++)
             {
                 a[6 - k.size() + i] = letterDigitToNumber(k[i]);
             }
@@ -89,7 +89,7 @@ struct MyStringHash {
 
        if (lowerCase >= '0' && lowerCase <= '9')
        {
-            return lowercase - 22;
+            return lowerCase - 22;
        }
 
        return 0;
