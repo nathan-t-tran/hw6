@@ -39,39 +39,31 @@ struct MyStringHash {
             }
             
             w[4] = val;
-
-           
         }
-       
         else 
         {
-            //divide the string into 6s?
-            int numofSubs = (k.size() + 5) / 6;
+            int chunk_index = (k.size() + 5) / 6 - 1;
 
-            int w_size = 4;
             for (int i = k.size(); i > 0; i -= 6)
             {
                 int a[6] = {0};
 
-                int start = std::max(0, i - 6);  // Index where this chunk starts
-                int len = i - start;             // Length of the chunk (could be < 6)
-            
-                // Fill in the base-36 digits, padding with 0s on the left
+                int start = max(0, i - 6);  // Start of this chunk
+                int len = i - start;             // Chunk length
+
                 for (int j = 0; j < len; ++j)
                 {
-                    a[6 - len + j] = letterDigitToNumber(k[j + start]);
+                    a[6 - len + j] = letterDigitToNumber(k[start + j]);
                 }
 
                 unsigned long long val = 0;
-
                 for (int j = 0; j < 6; j++)
                 {
                     val = val * 36 + a[j];
-                } 
+                }
 
-                w[w_size--] = val;
+                w[chunk_index--] = val;
             }
-
         }
 
         return rValues[0]*w[0] + rValues[1]*w[1] + rValues[2]*w[2] + rValues[3]*w[3] + rValues[4]*w[4];
