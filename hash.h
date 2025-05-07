@@ -22,7 +22,28 @@ struct MyStringHash {
         // Add your code here
         unsigned long long w[5] = {0};
 
-        if (k.size() > 6)
+        if (k.size() <= 6)
+        {
+            int a[6] = {0};
+
+            for (unsigned int i = 0; i < k.size(); i++)
+            {
+                a[6 - k.size() + i] = letterDigitToNumber(k[i]);
+            }
+
+            unsigned long long val = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                val = val * 36 + a[i];
+            }
+            
+            w[4] = val;
+
+           
+        }
+       
+        else 
         {
             //divide the string into 6s?
             int numofSubs = (k.size() + 5) / 6;
@@ -52,26 +73,6 @@ struct MyStringHash {
             }
 
         }
-        else 
-        {
-            int a[6] = {0};
-
-            for (unsigned int i = 0; i < k.size(); i++)
-            {
-                a[6 - k.size() + i] = letterDigitToNumber(k[i]);
-            }
-
-            unsigned long long val = 0;
-
-            for (int i = 0; i < 6; i++)
-            {
-                val = val * 36 + a[i];
-            }
-            
-            w[4] = val;
-
-           
-        }
 
         return rValues[0]*w[0] + rValues[1]*w[1] + rValues[2]*w[2] + rValues[3]*w[3] + rValues[4]*w[4];
     }
@@ -89,7 +90,7 @@ struct MyStringHash {
 
        if (lowerCase >= '0' && lowerCase <= '9')
        {
-            return lowerCase - 22;
+            return lowerCase - '0' + 26;
        }
 
        return 0;
