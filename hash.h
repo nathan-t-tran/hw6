@@ -42,14 +42,13 @@ struct MyStringHash {
         }
         else 
         {
-            int chunk_index = (k.size() + 5) / 6 - 1;
-
+            int chunk_index = (k.size() + 5) / 6 - 1;  // Index into w[], starting from highest used index
             for (int i = k.size(); i > 0; i -= 6)
             {
                 int a[6] = {0};
 
-                int start = max(0, i - 6);  // Start of this chunk
-                int len = i - start;             // Chunk length
+                int start = std::max(0, i - 6);
+                int len = i - start;
 
                 for (int j = 0; j < len; ++j)
                 {
@@ -57,7 +56,7 @@ struct MyStringHash {
                 }
 
                 unsigned long long val = 0;
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < 6; ++j)
                 {
                     val = val * 36 + a[j];
                 }
