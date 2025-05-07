@@ -41,7 +41,8 @@ struct MyStringHash {
             w[4] = val;
         }
         else 
-        {
+        {   
+            int w_size = 4;
             int chunk_index = (k.size() + 5) / 6 - 1;  // Index into w[], starting from highest used index
             for (int i = k.size(); i > 0; i -= 6)
             {
@@ -61,7 +62,7 @@ struct MyStringHash {
                     val = val * 36 + a[j];
                 }
 
-                w[chunk_index--] = val;
+                w[w_size--] = val;
             }
         }
 
