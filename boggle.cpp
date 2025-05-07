@@ -91,38 +91,28 @@ std::set<std::string> boggle(const std::set<std::string>& dict, const std::set<s
 	return result;
 }
 
-bool boggleHelper(
-    const std::set<std::string>& dict,
-    const std::set<std::string>& prefix,
-    const std::vector<std::vector<char>>& board,
-    std::string word,
-    std::set<std::string>& result,
-    unsigned int r, unsigned int c,
-    int dr, int dc)
+bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
+								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
-    // Base case: bounds check
-    if (r >= board.size() || c >= board.size()) {
-        return false;
-    }
+	if (r >= board.size() || c >= board.size()) {
+		return false;
+	}
 
-    word += board[r][c];
+	word += board[r][c];
 
-    // If not a prefix, prune
-    if (prefix.find(word) == prefix.end() && dict.find(word) == dict.end()) {
-        return false;
-    }
+	// If it's not a prefix or a full word, stop early (backtrack)
+	if (prefix.find(word) == prefix.end() && dict.find(word) == dict.end()) {
+		return false;
+	}
 
-    // Check if it's a terminal word
-    bool found = false;
-    if (dict.find(word) != dict.end()) {
-        result.insert(word);
-        found = true;
-    }
+	// Recurse to the next cell in the given direction
+	bool longerWordFound = boggleHelper(dict, prefix, board, word, result, r + dr, c + dc, dr, dc);
 
-    // Continue in the same direction
-    bool deeperFound = boggleHelper(dict, prefix, board, word, result, r + dr, c + dc, dr, dc);
+	if (!longerWordFound && dict.find(word) != dict.end()) {
+		result.insert(word);
+		return true;
+	}
 
-    // Only return true if we found a longer word down this path
-    return found || deeperFound;
+	return longerWordFound;
 }
 
